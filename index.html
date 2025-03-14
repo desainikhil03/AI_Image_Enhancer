@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Enhancer & Image Upscaler</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>AI Image Enhancer & Image Upscaler</h1>
+            <p class="subtitle">Effortlessly enhance and upscale your photo to get higher resolution image with one single click.</p>
+        </section>
+
+        <!-- Upload Section -->
+        <section class="upload-section">
+            <div class="upload-container">
+                <div class="upload-box">
+                    <button class="upload-btn">
+                        <i class="fas fa-upload"></i>
+                        Upload Image
+                    </button>
+                    <p class="drag-text">or drop a file here</p>
+                    <p class="shortcut-text">CTRL+V to paste image or URL</p>
+                </div>
+                
+                <!-- Add Image Processing Section -->
+                <div class="image-processing-section" style="display: none;">
+                    <div class="processing-container">
+                        <div class="comparison-slider-main">
+                            <div class="slider-labels">
+                                <span class="slider-label">Before</span>
+                                <span class="slider-label">After</span>
+                            </div>
+                            <img src="" alt="Enhanced Image" class="after-image" id="enhanced-image">
+                            <img src="" alt="Original Image" class="before-image" id="original-image">
+                            <div class="slider-handle"></div>
+                        </div>
+                        <div class="image-controls">
+                            <div class="control-group">
+                                <label>Enhancement Level</label>
+                                <input type="range" min="1" max="4" value="2" class="enhancement-slider" id="enhancement-level">
+                                <div class="level-indicators">
+                                    <span>1x</span>
+                                    <span>2x</span>
+                                    <span>3x</span>
+                                    <span>4x</span>
+                                </div>
+                            </div>
+                            <div class="control-buttons">
+                                <button class="process-btn" id="process-image">
+                                    <i class="fas fa-magic"></i>
+                                    Enhance Image
+                                </button>
+                                <button class="download-btn" id="download-image">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sample-images">
+                    <p>No image?</p>
+                    <p>Try one of these:</p>
+                    <div class="image-examples">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop" alt="Sample 1" width="60" height="60">
+                        <img src="https://images.unsplash.com/photo-1586348943529-beaae6c28db9?w=150&h=150&fit=crop" alt="Sample 2" width="60" height="60">
+                        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150&h=150&fit=crop" alt="Sample 3" width="60" height="60">
+                        <img src="https://images.unsplash.com/photo-1589156191108-c762ff4b96ab?w=150&h=150&fit=crop" alt="Sample 4" width="60" height="60">
+                    </div>
+                </div>
+
+                <div class="enhancer-app">
+                    <img src="https://cdn-icons-png.flaticon.com/512/5662/5662990.png" alt="Enhancer App Icon" width="48" height="48">
+                    <a href="#" class="app-link">Free Enhancer APP ›</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <h2>An Awesome Image Enhancer For Everyone</h2>
+            <p class="features-subtitle">Fix pixelated, blurry, and low-quality photos instantly with online image enhancer for printing, social media, marketing campaigns, presentations, and more.</p>
+
+            <div class="features-grid">
+                <!-- Photographer Feature -->
+                <div class="feature-card">
+                    <div class="comparison-slider">
+                        <div class="slider-labels">
+                            <span class="slider-label">Before</span>
+                            <span class="slider-label">After</span>
+                        </div>
+                        <img src="https://images.pexels.com/photos/2014422/pexels-photo-2014422.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Enhanced Photo" class="after-image">
+                        <img src="https://images.pexels.com/photos/2014422/pexels-photo-2014422.jpeg?auto=compress&cs=tinysrgb&w=600&blur=2" alt="Original Photo" class="before-image">
+                        <div class="slider-handle"></div>
+                    </div>
+                    <div class="feature-content">
+                        <h3>For Photographer</h3>
+                        <p>AI image upscaler to save much more time for your professional tasks with one simple click. Increase image size and image quality automatically so that you can focus on your art creation.</p>
+                    </div>
+                </div>
+
+                <!-- Cartoon/Anime Feature -->
+                <div class="feature-card">
+                    <div class="comparison-slider">
+                        <div class="slider-labels">
+                            <span class="slider-label">Before</span>
+                            <span class="slider-label">After</span>
+                        </div>
+                        <img src="https://images.pexels.com/photos/1545743/pexels-photo-1545743.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Enhanced Anime" class="after-image">
+                        <img src="https://images.pexels.com/photos/1545743/pexels-photo-1545743.jpeg?auto=compress&cs=tinysrgb&w=600&blur=2" alt="Original Anime" class="before-image">
+                        <div class="slider-handle"></div>
+                    </div>
+                    <div class="feature-content">
+                        <h3>For Cartoon/Anime Creator</h3>
+                        <p>Enhance photo or 3D rendered frame up to 4K to obtain higher resolution image with better details for anime posters or wallpapers.</p>
+                    </div>
+                </div>
+
+                <!-- E-commerce Feature -->
+                <div class="feature-card">
+                    <div class="comparison-slider">
+                        <div class="slider-labels">
+                            <span class="slider-label">Before</span>
+                            <span class="slider-label">After</span>
+                        </div>
+                        <img src="https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Enhanced Product" class="after-image">
+                        <img src="https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg?auto=compress&cs=tinysrgb&w=600&blur=2" alt="Original Product" class="before-image">
+                        <div class="slider-handle"></div>
+                    </div>
+                    <div class="feature-content">
+                        <h3>For E-commerce Shops</h3>
+                        <p>Enhance your image to catch attention, beat your competitors and impact your conversion rate. Boost sales with stunning product images. Improve image quality for DIY products. Suitable for POD industry.</p>
+                    </div>
+                </div>
+
+                <!-- Real Estate Feature -->
+                <div class="feature-card">
+                    <div class="comparison-slider">
+                        <div class="slider-labels">
+                            <span class="slider-label">Before</span>
+                            <span class="slider-label">After</span>
+                        </div>
+                        <img src="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Enhanced Property" class="after-image">
+                        <img src="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=600&blur=2" alt="Original Property" class="before-image">
+                        <div class="slider-handle"></div>
+                    </div>
+                    <div class="feature-content">
+                        <h3>For Real-estate</h3>
+                        <p>Get high-resolution, vibrant and saturated property photos in excellent quality and clear details with magic AI image enhancer.</p>
+                    </div>
+                </div>
+
+                <!-- Website Graphics Feature -->
+                <div class="feature-card">
+                    <div class="comparison-slider">
+                        <div class="slider-labels">
+                            <span class="slider-label">Before</span>
+                            <span class="slider-label">After</span>
+                        </div>
+                        <img src="https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Enhanced Graphics" class="after-image">
+                        <img src="https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=600&blur=2" alt="Original Graphics" class="before-image">
+                        <div class="slider-handle"></div>
+                    </div>
+                    <div class="feature-content">
+                        <h3>For APP/Website Graphics</h3>
+                        <p>Effortlessly enhance low-quality images to save time to complete more creative tasks. From logos to product images, everything can be upscaled with better quality.</p>
+                    </div>
+                </div>
+
+                <!-- Social Sharing Feature -->
+                <div class="feature-card">
+                    <div class="comparison-slider">
+                        <div class="slider-labels">
+                            <span class="slider-label">Before</span>
+                            <span class="slider-label">After</span>
+                        </div>
+                        <img src="https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Enhanced Social" class="after-image">
+                        <img src="https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&w=600&blur=2" alt="Original Social" class="before-image">
+                        <div class="slider-handle"></div>
+                    </div>
+                    <div class="feature-content">
+                        <h3>For Social Sharing</h3>
+                        <p>Enhance photos taken by your phone. Obtain more likes on social media like Facebook, Instagram, Twitter, etc. Recover compressed image files used for illustrations, photos or posters.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html> 

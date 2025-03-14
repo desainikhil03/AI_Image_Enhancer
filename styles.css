@@ -1,0 +1,457 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 3rem 0;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #1a1a1a;
+}
+
+.hero .subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Upload Section */
+.upload-section {
+    margin: 2rem 0;
+}
+
+.upload-container {
+    background: #fff;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.upload-box {
+    border: 2px dashed #e1e1e1;
+    border-radius: 15px;
+    padding: 3rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+}
+
+.upload-box:hover {
+    border-color: #ff4081;
+}
+
+.upload-btn {
+    background: #ff4081;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background 0.3s ease;
+}
+
+.upload-btn:hover {
+    background: #f50057;
+}
+
+.drag-text {
+    margin: 1rem 0;
+    color: #666;
+}
+
+.shortcut-text {
+    color: #999;
+    font-size: 0.9rem;
+}
+
+/* Sample Images Section */
+.sample-images {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.image-examples {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.image-examples img {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.image-examples img:hover {
+    transform: scale(1.1);
+}
+
+/* Enhancer App Section */
+.enhancer-app {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.app-link {
+    color: #333;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.app-link:hover {
+    color: #ff4081;
+}
+
+/* Features Section */
+.features {
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.features h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.features-subtitle {
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto 3rem auto;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (min-width: 1200px) {
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.feature-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Comparison Slider Labels */
+.comparison-slider, .comparison-slider-main {
+    position: relative;
+}
+
+.slider-labels {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    pointer-events: none;
+}
+
+.slider-label {
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Update existing comparison slider styles */
+.comparison-slider {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+
+.comparison-slider-main {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+.comparison-slider img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.comparison-slider .before-image {
+    z-index: 1;
+    clip-path: inset(0 50% 0 0);
+}
+
+.comparison-slider .after-image {
+    z-index: 0;
+}
+
+.slider-handle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: white;
+    left: 50%;
+    cursor: ew-resize;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.slider-handle::before {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: white;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.feature-content {
+    padding: 1.5rem;
+    text-align: left;
+}
+
+.feature-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #1a1a1a;
+}
+
+.feature-content p {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .upload-box {
+        padding: 2rem;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Add highlight class for drag and drop */
+.upload-box.highlight {
+    border-color: #ff4081;
+    background-color: rgba(255, 64, 129, 0.05);
+}
+
+/* Image Processing Section */
+.image-processing-section {
+    margin: 2rem 0;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.processing-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.comparison-slider-main img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #f8f9fa;
+}
+
+.comparison-slider-main .before-image {
+    z-index: 1;
+    clip-path: inset(0 50% 0 0);
+}
+
+.comparison-slider-main .after-image {
+    z-index: 0;
+}
+
+.image-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem 0;
+}
+
+.control-group {
+    text-align: center;
+}
+
+.control-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.enhancement-slider {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    -webkit-appearance: none;
+    height: 4px;
+    background: #e1e1e1;
+    border-radius: 2px;
+    outline: none;
+}
+
+.enhancement-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #ff4081;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.enhancement-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.level-indicators {
+    display: flex;
+    justify-content: space-between;
+    max-width: 400px;
+    margin: 0.5rem auto;
+    padding: 0 10px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.control-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.process-btn, .download-btn {
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.process-btn {
+    background: #ff4081;
+    color: white;
+}
+
+.process-btn:hover {
+    background: #f50057;
+}
+
+.download-btn {
+    background: #f8f9fa;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.download-btn:hover {
+    background: #e9ecef;
+}
+
+/* Loading State */
+.processing {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.processing::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    border: 2px solid #fff;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+} 
