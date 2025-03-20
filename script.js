@@ -1,4 +1,145 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // FAQ Functionality
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        
+        question.addEventListener('click', () => {
+            // Close all other FAQ items
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                }
+            });
+            
+            // Toggle current FAQ item
+            item.classList.toggle('active');
+        });
+    });
+
+    // API Configuration
+    const API_BASE_URL = 'http://localhost:5000/api';
+
+    // Feature Upload Functionality
+    const featureUploadBtns = document.querySelectorAll('.feature-upload-btn');
+    
+    featureUploadBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                handleFeatureFile(file, btn);
+            };
+            input.click();
+        });
+    });
+
+    function handleFeatureFile(file, uploadBtn) {
+        if (file && file.type.startsWith('image/')) {
+            const featureCard = uploadBtn.closest('.feature-card');
+            const processingSection = featureCard.querySelector('.feature-processing-section');
+            const beforeImage = processingSection.querySelector('.feature-before-image');
+            const afterImage = processingSection.querySelector('.feature-after-image');
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                beforeImage.src = e.target.result;
+                afterImage.src = e.target.result;
+                processingSection.style.display = 'block';
+                initializeFeatureSlider(processingSection.querySelector('.feature-comparison-slider'));
+                setupFeatureControls(processingSection, beforeImage, afterImage);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            alert('Please upload an image file.');
+        }
+    }
+
+    function setupFeatureControls(processingSection, beforeImage, afterImage) {
+        const processBtn = processingSection.querySelector('.feature-process-btn');
+        const downloadBtn = processingSection.querySelector('.feature-download-btn');
+        const enhancementSlider = processingSection.querySelector('.feature-enhancement-slider');
+
+        processBtn.addEventListener('click', async () => {
+            try {
+                processBtn.classList.add('processing');
+                
+                const level = enhancementSlider.value;
+                
+                // Call API to enhance image
+                const response = await fetch(`${API_BASE_URL}/enhance`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        image: beforeImage.src,
+                        level: parseInt(level)
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    afterImage.src = data.enhanced_image;
+                } else {
+                    throw new Error(data.error || 'Failed to enhance image');
+                }
+            } catch (error) {
+                alert('Error enhancing image: ' + error.message);
+            } finally {
+                processBtn.classList.remove('processing');
+            }
+        });
+
+        downloadBtn.addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.download = 'enhanced-image.png';
+            link.href = afterImage.src;
+            link.click();
+        });
+    }
+
+    function initializeFeatureSlider(slider) {
+        const handle = slider.querySelector('.slider-handle');
+        const beforeImage = slider.querySelector('.feature-before-image');
+        let isResizing = false;
+
+        handle.addEventListener('mousedown', startResizing);
+        document.addEventListener('mousemove', moveHandle);
+        document.addEventListener('mouseup', stopResizing);
+
+        handle.addEventListener('touchstart', startResizing);
+        document.addEventListener('touchmove', moveHandle);
+        document.addEventListener('touchend', stopResizing);
+
+        function startResizing(e) {
+            isResizing = true;
+            e.preventDefault();
+        }
+
+        function stopResizing() {
+            isResizing = false;
+        }
+
+        function moveHandle(e) {
+            if (!isResizing) return;
+
+            const sliderRect = slider.getBoundingClientRect();
+            const x = (e.clientX || e.touches?.[0]?.clientX || 0) - sliderRect.left;
+            const position = Math.max(0, Math.min(x / sliderRect.width * 100, 100));
+            
+            handle.style.left = `${position}%`;
+            beforeImage.style.clipPath = `inset(0 ${100 - position}% 0 0)`;
+        }
+
+        // Set initial position
+        moveHandle({ clientX: slider.getBoundingClientRect().left + slider.offsetWidth / 2 });
+    }
+
     // Upload functionality
     const uploadBox = document.querySelector('.upload-box');
     const uploadBtn = document.querySelector('.upload-btn');
@@ -64,31 +205,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Process image function
-    processBtn.addEventListener('click', () => {
-        processBtn.classList.add('processing');
-        
-        // Simulate image processing with a blur effect
-        const level = enhancementSlider.value;
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        const img = new Image();
-        
-        img.onload = () => {
-            canvas.width = img.width;
-            canvas.height = img.height;
+    // Process image function using API
+    processBtn.addEventListener('click', async () => {
+        try {
+            processBtn.classList.add('processing');
             
-            // Apply enhancement effect (for demo, we'll just adjust brightness and contrast)
-            ctx.filter = `brightness(${100 + level * 10}%) contrast(${100 + level * 5}%)`;
-            ctx.drawImage(img, 0, 0);
+            const level = enhancementSlider.value;
             
-            setTimeout(() => {
-                enhancedImage.src = canvas.toDataURL();
-                processBtn.classList.remove('processing');
-            }, 1000); // Simulate processing time
-        };
-        
-        img.src = originalImage.src;
+            // Call API to enhance image
+            const response = await fetch(`${API_BASE_URL}/enhance`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    image: originalImage.src,
+                    level: parseInt(level)
+                })
+            });
+
+            const data = await response.json();
+            
+            if (data.status === 'success') {
+                enhancedImage.src = data.enhanced_image;
+            } else {
+                throw new Error(data.error || 'Failed to enhance image');
+            }
+        } catch (error) {
+            alert('Error enhancing image: ' + error.message);
+        } finally {
+            processBtn.classList.remove('processing');
+        }
     });
 
     // Download enhanced image
@@ -163,8 +310,49 @@ document.addEventListener('DOMContentLoaded', () => {
     // Sample images click handler
     const sampleImages = document.querySelectorAll('.image-examples img');
     sampleImages.forEach(img => {
-        img.addEventListener('click', () => {
-            handleFile(dataURLtoFile(img.src, 'sample.jpg'));
+        img.addEventListener('click', async () => {
+            try {
+                // Add loading state
+                img.style.opacity = '0.5';
+                img.style.pointerEvents = 'none';
+                
+                // Create a loading spinner
+                const spinner = document.createElement('div');
+                spinner.className = 'processing';
+                img.parentElement.appendChild(spinner);
+
+                // Load and process the image
+                const file = await fetch(img.src)
+                    .then(response => response.blob())
+                    .then(blob => new File([blob], 'sample.jpg', { type: 'image/jpeg' }));
+                
+                handleFile(file);
+
+                // Remove loading state
+                img.style.opacity = '1';
+                img.style.pointerEvents = 'auto';
+                spinner.remove();
+
+                // Scroll to the processing section
+                document.querySelector('.image-processing-section').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            } catch (error) {
+                console.error('Error loading sample image:', error);
+                alert('Sorry, there was an error loading the sample image. Please try another image or upload your own.');
+                
+                // Reset loading state
+                img.style.opacity = '1';
+                img.style.pointerEvents = 'auto';
+                const spinner = img.parentElement.querySelector('.processing');
+                if (spinner) spinner.remove();
+            }
+        });
+
+        // Add tooltip behavior
+        img.addEventListener('mouseover', () => {
+            img.title = 'Click to use this sample image';
         });
     });
 
@@ -179,5 +367,112 @@ document.addEventListener('DOMContentLoaded', () => {
             u8arr[n] = bstr.charCodeAt(n);
         }
         return new File([u8arr], filename, {type:mime});
+    }
+
+    // Feedback Form Functionality
+    const feedbackForm = document.getElementById('feedback-form');
+    const ratingStars = document.querySelectorAll('.rating-stars i');
+    const ratingInput = document.getElementById('rating');
+
+    // Star Rating Functionality
+    ratingStars.forEach(star => {
+        star.addEventListener('click', () => {
+            const rating = star.getAttribute('data-rating');
+            ratingInput.value = rating;
+            
+            // Update star colors
+            ratingStars.forEach(s => {
+                if (s.getAttribute('data-rating') <= rating) {
+                    s.classList.add('active');
+                } else {
+                    s.classList.remove('active');
+                }
+            });
+        });
+
+        // Hover effect
+        star.addEventListener('mouseover', () => {
+            const rating = star.getAttribute('data-rating');
+            ratingStars.forEach(s => {
+                if (s.getAttribute('data-rating') <= rating) {
+                    s.classList.add('active');
+                } else {
+                    s.classList.remove('active');
+                }
+            });
+        });
+    });
+
+    // Reset stars on mouseout
+    document.querySelector('.rating-stars').addEventListener('mouseout', () => {
+        const rating = ratingInput.value;
+        ratingStars.forEach(s => {
+            if (s.getAttribute('data-rating') <= rating) {
+                s.classList.add('active');
+            } else {
+                s.classList.remove('active');
+            }
+        });
+    });
+
+    // Form Submission using API
+    feedbackForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        try {
+            // Get form data
+            const formData = {
+                name: document.getElementById('user-name').value,
+                email: document.getElementById('user-email').value,
+                rating: document.getElementById('rating').value,
+                feedback: document.getElementById('feedback-text').value
+            };
+
+            // Submit feedback to API
+            const response = await fetch(`${API_BASE_URL}/feedback`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                showFeedbackMessage('Thank you for your feedback! We appreciate your input.', 'success');
+                feedbackForm.reset();
+                
+                // Reset stars
+                ratingStars.forEach(star => star.classList.remove('active'));
+                ratingInput.value = '';
+            } else {
+                throw new Error(data.error || 'Failed to submit feedback');
+            }
+        } catch (error) {
+            showFeedbackMessage('Error submitting feedback: ' + error.message, 'error');
+        }
+    });
+
+    // Helper function to show feedback messages
+    function showFeedbackMessage(message, type) {
+        // Remove any existing messages
+        const existingMessage = document.querySelector('.feedback-message');
+        if (existingMessage) {
+            existingMessage.remove();
+        }
+
+        // Create new message element
+        const messageElement = document.createElement('div');
+        messageElement.className = `feedback-message feedback-${type}`;
+        messageElement.textContent = message;
+
+        // Add message to form
+        feedbackForm.appendChild(messageElement);
+
+        // Remove message after 5 seconds
+        setTimeout(() => {
+            messageElement.remove();
+        }, 5000);
     }
 }); 
